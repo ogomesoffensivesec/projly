@@ -1,54 +1,45 @@
-# React + TypeScript + Vite
+# MVP Dev Manager
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Um painel moderno para gerenciamento de projetos, desenvolvido com React, TypeScript, Vite, Tailwind CSS, TanStack Table e animações com Framer Motion.
 
-Currently, two official plugins are available:
+## Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Dashboard de Projetos**: Visualize, filtre, pesquise e gerencie projetos em uma tabela interativa.
+- **Favoritos**: Marque projetos como favoritos e visualize-os em cards com rolagem horizontal e animações.
+- **Tema Escuro**: Interface totalmente adaptada para dark mode usando cores neutras do Tailwind.
+- **Ações rápidas**: Edite, duplique, arquive, compartilhe ou exclua projetos com confirmação.
+- **Paginação e Filtros**: Controle de paginação, filtros por status, busca multi-coluna e alternância de colunas.
+- **Animações**: Cards de favoritos com fade-in/fade-out ao adicionar ou remover.
+- **Responsivo**: Layout adaptado para diferentes tamanhos de tela.
 
-## Expanding the ESLint configuration
+## Tecnologias
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [React](https://react.dev/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TanStack Table](https://tanstack.com/table/v8)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Lucide React](https://lucide.dev/)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Como rodar o projeto
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Instale as dependências:
+   ```sh
+   pnpm install
+   ```
+2. Rode o projeto em modo desenvolvimento:
+   ```sh
+   pnpm dev
+   ```
+3. Acesse [http://localhost:5173](http://localhost:5173) no navegador.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Estrutura principal
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- `src/components/dev/dashboard/sections/projects-section.tsx`: Componente principal da tabela e cards de projetos.
+- `src/components/ui/`: Componentes reutilizáveis de UI (botões, inputs, tabelas, etc).
+
+## Customização
+
+- Para alterar os projetos exibidos, edite o array `mockProjects` no arquivo `projects-section.tsx`.
+- Para mudar as cores, personalize as classes do Tailwind no próprio componente.
