@@ -15,14 +15,15 @@ import {
 } from "@/components/ui/popover"
 import UserMenu from "@/components/user-menu"
 import { User } from "lucide-react"
+import { useLocation } from '@tanstack/react-router'
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#", label: "Overview" },
-  { href: "#", label: "Projects" },
-  { href: "#", label: "Organizations" },
-  { href: "#", label: "Users" },
-  { href: "#", label: "Settings" },
+  { href: '/dashboard/dev', label: 'Overview', match: '/dashboard/dev' },
+  { href: '/dashboard/dev/projects', label: 'Projects', match: '/dashboard/dev/projects' },
+  { href: '/dashboard/dev/organizations', label: 'Organizations', match: '/dashboard/dev/organizations' },
+  { href: '/dashboard/dev/users', label: 'Users', match: '/dashboard/dev/users' },
+  { href: '/dashboard/dev/settings', label: 'Settings', match: '/dashboard/dev/settings' },
 ]
 
 interface HeaderProps {
@@ -31,6 +32,16 @@ interface HeaderProps {
 }
 
 export default function Header({ onNavigate, currentSection }: HeaderProps) {
+  const location = useLocation();
+  const pathname = location.pathname;
+
+  const isActive = (href: string) => {
+    if (href === '/dashboard/dev') {
+      return pathname === '/dashboard/dev' || pathname === '/dashboard/dev/';
+    }
+    return pathname === href;
+  };
+
   return (
     <header className="border-b py-4 border-neutral-800 bg-neutral-900 px-4 md:px-6">
       <div className="flex h-16 items-center justify-between gap-4">
@@ -78,7 +89,8 @@ export default function Header({ onNavigate, currentSection }: HeaderProps) {
                     <NavigationMenuItem key={index} className="w-full">
                       <NavigationMenuLink
                         href={link.href}
-                        className={`py-1.5 ${currentSection === link.label ? 'text-violet-400' : 'text-neutral-400 hover:text-neutral-200'}`}
+                        data-active={isActive(link.href)}
+                        className={`py-1.5 ${isActive(link.href) ? 'text-violet-400' : 'text-neutral-400 hover:text-neutral-200'}`}
                         onClick={(e) => {
                           e.preventDefault()
                           onNavigate(link.label)
@@ -123,7 +135,7 @@ export default function Header({ onNavigate, currentSection }: HeaderProps) {
             <NavigationMenuItem key={index}>
               <NavigationMenuLink
                 href={link.href}
-                data-active={currentSection === link.label}
+                data-active={isActive(link.href)}
                 onClick={(e) => {
                   e.preventDefault()
                   onNavigate(link.label)

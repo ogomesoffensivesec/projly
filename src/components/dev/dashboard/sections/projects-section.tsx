@@ -352,8 +352,8 @@ export default function ProjectsSection() {
               className={cn(
                 "transition-colors",
                 project.isFavorite
-                  ? "fill-yellow-400 text-yellow-400"
-                  : "text-neutral-400 hover:text-yellow-400"
+                  ? "fill-violet-500 text-violet-500"
+                  : "text-neutral-400 hover:text-violet-500"
               )}
             />
           </Button>
@@ -389,9 +389,9 @@ export default function ProjectsSection() {
       cell: ({ row }) => {
         const status = row.getValue("status") as string
         const statusMap = {
-          "in-progress": { label: "Em Progresso", className: "bg-blue-500/20 text-blue-500" },
-          "planning": { label: "Planejamento", className: "bg-yellow-500/20 text-yellow-500" },
-          "completed": { label: "Concluído", className: "bg-green-500/20 text-green-500" },
+          "in-progress": { label: "Em Progresso", className: "bg-violet-500/20 text-violet-500" },
+          "planning": { label: "Planejamento", className: "bg-violet-300/20 text-violet-300" },
+          "completed": { label: "Concluído", className: "bg-violet-950/20 text-violet-300" },
         }
         const { label, className } = statusMap[status as keyof typeof statusMap]
         return <Badge className={className}>{label}</Badge>
@@ -408,7 +408,7 @@ export default function ProjectsSection() {
           <div className="flex items-center gap-2 w-full">
             <div className="h-2 w-full rounded-full bg-neutral-800">
               <div
-                className="h-full rounded-full bg-blue-500"
+                className="h-full rounded-full bg-violet-500"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -918,17 +918,17 @@ export default function ProjectsSection() {
                     className="w-[400px] flex-shrink-0 bg-neutral-900 border border-neutral-800 rounded-lg p-4 flex flex-col gap-3 shadow-sm"
                   >
                     <div className="flex items-center gap-2 mb-2">
-                      <StarIcon size={18} className="text-yellow-400 fill-yellow-400" />
+                      <StarIcon size={18} className="text-violet-500 fill-violet-500" />
                       <span className="font-bold text-neutral-100 text-base truncate">{project.title}</span>
                     </div>
                     <div className="text-neutral-400 text-sm truncate">{project.company} • {project.sector}</div>
                     <div className="flex items-center gap-2">
                       <Badge className={
                         project.status === "in-progress"
-                          ? "bg-blue-500/20 text-blue-500"
+                          ? "bg-violet-500/20 text-violet-500"
                           : project.status === "planning"
-                            ? "bg-yellow-500/20 text-yellow-500"
-                            : "bg-green-500/20 text-green-500"
+                            ? "bg-violet-300/20 text-violet-300"
+                            : "bg-violet-950/20 text-violet-950"
                       }>
                         {project.status === "in-progress"
                           ? "Em Progresso"

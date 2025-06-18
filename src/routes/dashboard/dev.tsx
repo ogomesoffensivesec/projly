@@ -1,41 +1,52 @@
 import Header from '@/components/dev/dashboard/header'
-import DashboardSection from '@/components/dev/dashboard/sections/dashboard-section'
-import OrganizationsSection from '@/components/dev/dashboard/sections/organizations-section'
-import ProjectsSection from '@/components/dev/dashboard/sections/projects-section'
-import SettingsSection from '@/components/dev/dashboard/sections/settings-section'
-import UsersSection from '@/components/dev/dashboard/sections/users-section'
-import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
+import { createFileRoute, useNavigate, useRouter, Outlet } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/dashboard/dev')({
   component: DevDashboard,
 })
 
 function DevDashboard() {
-  const [currentSection, setCurrentSection] = useState('Overview')
+  const navigate = useNavigate()
+  const router = useRouter()
+  const pathname = router.state.location.pathname
+  // Deriva a seção atual da rota para passar para o Header
+  const sectionFromPath = () => {
+    const path = pathname
+    if (path.endsWith('/projects')) return 'Projects'
+    if (path.endsWith('/organizations')) return 'Organizations'
+    if (path.endsWith('/users')) return 'Users'
+    if (path.endsWith('/settings')) return 'Settings'
+    return 'Overview'
+  }
+  const currentSection = sectionFromPath()
 
-  const renderContent = () => {
-    switch (currentSection) {
+  const handleNavigate = (section: string) => {
+    switch (section) {
       case 'Overview':
-        return <DashboardSection />
+        navigate({ to: '/dashboard/dev' })
+        break
       case 'Projects':
-        return <ProjectsSection />
+        navigate({ to: '/dashboard/dev/projects' as any })
+        break
       case 'Organizations':
-        return <OrganizationsSection />
+        navigate({ to: '/dashboard/dev/organizations' as any })
+        break
       case 'Users':
-        return <UsersSection />
+        navigate({ to: '/dashboard/dev/users' as any })
+        break
       case 'Settings':
-        return <SettingsSection />
+        navigate({ to: '/dashboard/dev/settings' as any })
+        break
       default:
-        return null
+        navigate({ to: '/dashboard/dev' })
     }
   }
 
   return (
     <div className="min-h-screen bg-neutral-950 text-white">
-      <Header onNavigate={setCurrentSection} currentSection={currentSection} />
+      <Header onNavigate={handleNavigate} currentSection={currentSection} pathname={pathname} />
       <main className="min-h-[calc(100vh-4rem)] overflow-auto bg-neutral-950">
-        {renderContent()}
+        <Outlet />
       </main>
     </div>
   )

@@ -22,9 +22,14 @@ import { Route as DashboardDevRouteImport } from './routes/dashboard/dev'
 import { Route as AuthRequestAccessRouteImport } from './routes/auth/request-access'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
+import { Route as DashboardDevIndexRouteImport } from './routes/dashboard/dev/index'
 import { Route as ProjectsIdTasksRouteImport } from './routes/projects/$id/tasks'
 import { Route as ProjectsIdScheduleRouteImport } from './routes/projects/$id/schedule'
 import { Route as ProjectsIdEditRouteImport } from './routes/projects/$id/edit'
+import { Route as DashboardDevUsersRouteImport } from './routes/dashboard/dev/users'
+import { Route as DashboardDevSettingsRouteImport } from './routes/dashboard/dev/settings'
+import { Route as DashboardDevProjectsRouteImport } from './routes/dashboard/dev/projects'
+import { Route as DashboardDevOrganizationsRouteImport } from './routes/dashboard/dev/organizations'
 
 const TermsRoute = TermsRouteImport.update({
   id: '/terms',
@@ -91,6 +96,11 @@ const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
   path: '/auth/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardDevIndexRoute = DashboardDevIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardDevRoute,
+} as any)
 const ProjectsIdTasksRoute = ProjectsIdTasksRouteImport.update({
   id: '/tasks',
   path: '/tasks',
@@ -106,6 +116,27 @@ const ProjectsIdEditRoute = ProjectsIdEditRouteImport.update({
   path: '/edit',
   getParentRoute: () => ProjectsIdRoute,
 } as any)
+const DashboardDevUsersRoute = DashboardDevUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => DashboardDevRoute,
+} as any)
+const DashboardDevSettingsRoute = DashboardDevSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => DashboardDevRoute,
+} as any)
+const DashboardDevProjectsRoute = DashboardDevProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => DashboardDevRoute,
+} as any)
+const DashboardDevOrganizationsRoute =
+  DashboardDevOrganizationsRouteImport.update({
+    id: '/organizations',
+    path: '/organizations',
+    getParentRoute: () => DashboardDevRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -115,15 +146,20 @@ export interface FileRoutesByFullPath {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/request-access': typeof AuthRequestAccessRoute
-  '/dashboard/dev': typeof DashboardDevRoute
+  '/dashboard/dev': typeof DashboardDevRouteWithChildren
   '/dashboard/manager': typeof DashboardManagerRoute
   '/projects/$id': typeof ProjectsIdRouteWithChildren
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/new': typeof ProjectsNewRoute
   '/projects': typeof ProjectsIndexRoute
+  '/dashboard/dev/organizations': typeof DashboardDevOrganizationsRoute
+  '/dashboard/dev/projects': typeof DashboardDevProjectsRoute
+  '/dashboard/dev/settings': typeof DashboardDevSettingsRoute
+  '/dashboard/dev/users': typeof DashboardDevUsersRoute
   '/projects/$id/edit': typeof ProjectsIdEditRoute
   '/projects/$id/schedule': typeof ProjectsIdScheduleRoute
   '/projects/$id/tasks': typeof ProjectsIdTasksRoute
+  '/dashboard/dev/': typeof DashboardDevIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -133,15 +169,19 @@ export interface FileRoutesByTo {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/request-access': typeof AuthRequestAccessRoute
-  '/dashboard/dev': typeof DashboardDevRoute
   '/dashboard/manager': typeof DashboardManagerRoute
   '/projects/$id': typeof ProjectsIdRouteWithChildren
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/new': typeof ProjectsNewRoute
   '/projects': typeof ProjectsIndexRoute
+  '/dashboard/dev/organizations': typeof DashboardDevOrganizationsRoute
+  '/dashboard/dev/projects': typeof DashboardDevProjectsRoute
+  '/dashboard/dev/settings': typeof DashboardDevSettingsRoute
+  '/dashboard/dev/users': typeof DashboardDevUsersRoute
   '/projects/$id/edit': typeof ProjectsIdEditRoute
   '/projects/$id/schedule': typeof ProjectsIdScheduleRoute
   '/projects/$id/tasks': typeof ProjectsIdTasksRoute
+  '/dashboard/dev': typeof DashboardDevIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -152,15 +192,20 @@ export interface FileRoutesById {
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/request-access': typeof AuthRequestAccessRoute
-  '/dashboard/dev': typeof DashboardDevRoute
+  '/dashboard/dev': typeof DashboardDevRouteWithChildren
   '/dashboard/manager': typeof DashboardManagerRoute
   '/projects/$id': typeof ProjectsIdRouteWithChildren
   '/projects/$slug': typeof ProjectsSlugRoute
   '/projects/new': typeof ProjectsNewRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/dashboard/dev/organizations': typeof DashboardDevOrganizationsRoute
+  '/dashboard/dev/projects': typeof DashboardDevProjectsRoute
+  '/dashboard/dev/settings': typeof DashboardDevSettingsRoute
+  '/dashboard/dev/users': typeof DashboardDevUsersRoute
   '/projects/$id/edit': typeof ProjectsIdEditRoute
   '/projects/$id/schedule': typeof ProjectsIdScheduleRoute
   '/projects/$id/tasks': typeof ProjectsIdTasksRoute
+  '/dashboard/dev/': typeof DashboardDevIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -178,9 +223,14 @@ export interface FileRouteTypes {
     | '/projects/$slug'
     | '/projects/new'
     | '/projects'
+    | '/dashboard/dev/organizations'
+    | '/dashboard/dev/projects'
+    | '/dashboard/dev/settings'
+    | '/dashboard/dev/users'
     | '/projects/$id/edit'
     | '/projects/$id/schedule'
     | '/projects/$id/tasks'
+    | '/dashboard/dev/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -190,15 +240,19 @@ export interface FileRouteTypes {
     | '/auth/forgot-password'
     | '/auth/login'
     | '/auth/request-access'
-    | '/dashboard/dev'
     | '/dashboard/manager'
     | '/projects/$id'
     | '/projects/$slug'
     | '/projects/new'
     | '/projects'
+    | '/dashboard/dev/organizations'
+    | '/dashboard/dev/projects'
+    | '/dashboard/dev/settings'
+    | '/dashboard/dev/users'
     | '/projects/$id/edit'
     | '/projects/$id/schedule'
     | '/projects/$id/tasks'
+    | '/dashboard/dev'
   id:
     | '__root__'
     | '/'
@@ -214,9 +268,14 @@ export interface FileRouteTypes {
     | '/projects/$slug'
     | '/projects/new'
     | '/projects/'
+    | '/dashboard/dev/organizations'
+    | '/dashboard/dev/projects'
+    | '/dashboard/dev/settings'
+    | '/dashboard/dev/users'
     | '/projects/$id/edit'
     | '/projects/$id/schedule'
     | '/projects/$id/tasks'
+    | '/dashboard/dev/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -227,7 +286,7 @@ export interface RootRouteChildren {
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthRequestAccessRoute: typeof AuthRequestAccessRoute
-  DashboardDevRoute: typeof DashboardDevRoute
+  DashboardDevRoute: typeof DashboardDevRouteWithChildren
   DashboardManagerRoute: typeof DashboardManagerRoute
   ProjectsIdRoute: typeof ProjectsIdRouteWithChildren
   ProjectsSlugRoute: typeof ProjectsSlugRoute
@@ -328,6 +387,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/dev/': {
+      id: '/dashboard/dev/'
+      path: '/'
+      fullPath: '/dashboard/dev/'
+      preLoaderRoute: typeof DashboardDevIndexRouteImport
+      parentRoute: typeof DashboardDevRoute
+    }
     '/projects/$id/tasks': {
       id: '/projects/$id/tasks'
       path: '/tasks'
@@ -349,8 +415,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsIdEditRouteImport
       parentRoute: typeof ProjectsIdRoute
     }
+    '/dashboard/dev/users': {
+      id: '/dashboard/dev/users'
+      path: '/users'
+      fullPath: '/dashboard/dev/users'
+      preLoaderRoute: typeof DashboardDevUsersRouteImport
+      parentRoute: typeof DashboardDevRoute
+    }
+    '/dashboard/dev/settings': {
+      id: '/dashboard/dev/settings'
+      path: '/settings'
+      fullPath: '/dashboard/dev/settings'
+      preLoaderRoute: typeof DashboardDevSettingsRouteImport
+      parentRoute: typeof DashboardDevRoute
+    }
+    '/dashboard/dev/projects': {
+      id: '/dashboard/dev/projects'
+      path: '/projects'
+      fullPath: '/dashboard/dev/projects'
+      preLoaderRoute: typeof DashboardDevProjectsRouteImport
+      parentRoute: typeof DashboardDevRoute
+    }
+    '/dashboard/dev/organizations': {
+      id: '/dashboard/dev/organizations'
+      path: '/organizations'
+      fullPath: '/dashboard/dev/organizations'
+      preLoaderRoute: typeof DashboardDevOrganizationsRouteImport
+      parentRoute: typeof DashboardDevRoute
+    }
   }
 }
+
+interface DashboardDevRouteChildren {
+  DashboardDevOrganizationsRoute: typeof DashboardDevOrganizationsRoute
+  DashboardDevProjectsRoute: typeof DashboardDevProjectsRoute
+  DashboardDevSettingsRoute: typeof DashboardDevSettingsRoute
+  DashboardDevUsersRoute: typeof DashboardDevUsersRoute
+  DashboardDevIndexRoute: typeof DashboardDevIndexRoute
+}
+
+const DashboardDevRouteChildren: DashboardDevRouteChildren = {
+  DashboardDevOrganizationsRoute: DashboardDevOrganizationsRoute,
+  DashboardDevProjectsRoute: DashboardDevProjectsRoute,
+  DashboardDevSettingsRoute: DashboardDevSettingsRoute,
+  DashboardDevUsersRoute: DashboardDevUsersRoute,
+  DashboardDevIndexRoute: DashboardDevIndexRoute,
+}
+
+const DashboardDevRouteWithChildren = DashboardDevRoute._addFileChildren(
+  DashboardDevRouteChildren,
+)
 
 interface ProjectsIdRouteChildren {
   ProjectsIdEditRoute: typeof ProjectsIdEditRoute
@@ -376,7 +490,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthRequestAccessRoute: AuthRequestAccessRoute,
-  DashboardDevRoute: DashboardDevRoute,
+  DashboardDevRoute: DashboardDevRouteWithChildren,
   DashboardManagerRoute: DashboardManagerRoute,
   ProjectsIdRoute: ProjectsIdRouteWithChildren,
   ProjectsSlugRoute: ProjectsSlugRoute,

@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 import { differenceInDays } from "date-fns"
-import { PlusIcon, Check, X } from "lucide-react"
+import { PlusIcon, Check, X, ChevronsUpDownIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button"
@@ -54,6 +54,11 @@ import {
     StepperDescription,
     StepperSeparator,
 } from "@/components/ui/stepper"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
 
 type FormValues = {
     name: string
@@ -370,52 +375,63 @@ export function NewProjectDialog() {
                                                             Equipe <span className="text-red-500">*</span>
                                                         </FormLabel>
                                                         <FormControl>
-                                                            <Command className="bg-neutral-800 border border-neutral-700 rounded-md">
-                                                                <CommandInput placeholder="Buscar membros..." className="h-10 text-neutral-100" />
-                                                                <CommandList>
-                                                                    <CommandEmpty>Nenhum membro encontrado.</CommandEmpty>
-                                                                    <CommandGroup>
-                                                                        <CommandItem
-                                                                            value="1"
-                                                                            onSelect={() => {
-                                                                                const currentValue = Array.isArray(field.value) ? field.value : []
-                                                                                const newValue = currentValue.includes("1") 
-                                                                                    ? currentValue.filter(id => id !== "1")
-                                                                                    : [...currentValue, "1"]
-                                                                                field.onChange(newValue)
-                                                                            }}
-                                                                            className="text-white hover:bg-neutral-700"
-                                                                        >
-                                                                            <Check
-                                                                                className={cn(
-                                                                                    "mr-2 h-4 w-4",
-                                                                                    Array.isArray(field.value) && field.value.includes("1") ? "opacity-100" : "opacity-0"
-                                                                                )}
-                                                                            />
-                                                                            João Silva
-                                                                        </CommandItem>
-                                                                        <CommandItem
-                                                                            value="2"
-                                                                            onSelect={() => {
-                                                                                const currentValue = Array.isArray(field.value) ? field.value : []
-                                                                                const newValue = currentValue.includes("2")
-                                                                                    ? currentValue.filter(id => id !== "2")
-                                                                                    : [...currentValue, "2"]
-                                                                                field.onChange(newValue)
-                                                                            }}
-                                                                            className="text-white hover:bg-neutral-700"
-                                                                        >
-                                                                            <Check
-                                                                                className={cn(
-                                                                                    "mr-2 h-4 w-4",
-                                                                                    Array.isArray(field.value) && field.value.includes("2") ? "opacity-100" : "opacity-0"
-                                                                                )}
-                                                                            />
-                                                                            Maria Santos
-                                                                        </CommandItem>
-                                                                    </CommandGroup>
-                                                                </CommandList>
-                                                            </Command>
+                                                            <Popover>
+                                                                <PopoverTrigger asChild>
+                                                                    <Button
+                                                                        variant="outline"
+                                                                        role="combobox"
+                                                                        aria-expanded={undefined}
+                                                                        className="w-full justify-between bg-neutral-800 border-neutral-700 text-neutral-100 hover:bg-neutral-700"
+                                                                    >
+                                                                        {Array.isArray(field.value) && field.value.length > 0
+                                                                            ? field.value
+                                                                                  .map((id) =>
+                                                                                    id === "1"
+                                                                                        ? "João Silva"
+                                                                                        : id === "2"
+                                                                                        ? "Maria Santos"
+                                                                                        : id
+                                                                                  )
+                                                                                  .join(", ")
+                                                                            : "Selecione membros..."}
+                                                                        <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                                                                    </Button>
+                                                                </PopoverTrigger>
+                                                                <PopoverContent className="w-full min-w-[200px] p-0 bg-neutral-800 border-neutral-700">
+                                                                    <Command>
+                                                                        <CommandInput placeholder="Buscar membros..." className="h-10 text-neutral-100" />
+                                                                        <CommandList>
+                                                                            <CommandEmpty>Nenhum membro encontrado.</CommandEmpty>
+                                                                            <CommandGroup>
+                                                                                {[{ value: "1", label: "João Silva" }, { value: "2", label: "Maria Santos" }].map((member) => (
+                                                                                    <CommandItem
+                                                                                        key={member.value}
+                                                                                        value={member.value}
+                                                                                        onSelect={() => {
+                                                                                            const currentValue = Array.isArray(field.value) ? field.value : []
+                                                                                            const newValue = currentValue.includes(member.value)
+                                                                                                ? currentValue.filter((id) => id !== member.value)
+                                                                                                : [...currentValue, member.value]
+                                                                                            field.onChange(newValue)
+                                                                                        }}
+                                                                                        className="text-white hover:bg-neutral-700"
+                                                                                    >
+                                                                                        <Check
+                                                                                            className={cn(
+                                                                                                "mr-2 h-4 w-4",
+                                                                                                Array.isArray(field.value) && field.value.includes(member.value)
+                                                                                                    ? "opacity-100 text-violet-400"
+                                                                                                    : "opacity-0"
+                                                                                            )}
+                                                                                        />
+                                                                                        {member.label}
+                                                                                    </CommandItem>
+                                                                                ))}
+                                                                            </CommandGroup>
+                                                                        </CommandList>
+                                                                    </Command>
+                                                                </PopoverContent>
+                                                            </Popover>
                                                         </FormControl>
                                                         <FormMessage className="text-red-500" />
                                                     </FormItem>
