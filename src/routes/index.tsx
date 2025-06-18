@@ -18,7 +18,7 @@ function Index() {
           </Badge>
         </div>
         <div className='flex items-center gap-2'>
-          <Button variant='ghost' onClick={() => navigate({ to: '/auth/login' })}>
+          <Button variant='ghost' onClick={() => navigate({ to: '/auth/login' })} className='hover:bg-neutral-800 hover:text-white '>
             Entrar
           </Button>
           <Button>
@@ -30,10 +30,10 @@ function Index() {
         <h2 className='text-6xl font-extrabold text-center leading-tight'>
           Do <span className='text-violet-300'>planejamento</span> <br /> Ao <span className='text-violet-500'>lançamento</span>
         </h2>
-        <p className='text-muted-foreground text-center'>
-          proj.ly é a plataforma completa de gestão de projetos que torna tudo mais ágil e transparente.
+        <p className='text-muted-foreground text-center text-lg'>
+          Proj.ly é a plataforma completa de gestão de projetos que torna tudo mais ágil e transparente.
         </p>
-        <Button className='w-fit mx-auto mt-4 px-8' size='lg'>
+        <Button className='w-fit mx-auto mt-4 px-8' size='lg' onClick={() => navigate({ to: '/auth/request-access' })}>
           Solicitar acesso
         </Button>
       </div>

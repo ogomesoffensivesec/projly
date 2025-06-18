@@ -9,7 +9,7 @@ import type {
   Row,
   SortingState,
   VisibilityState,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 import {
   flexRender,
   getCoreRowModel,
@@ -18,7 +18,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
-} from "@tanstack/react-table"
+} from "@tanstack/react-table";
 import {
   ChevronDownIcon,
   ChevronFirstIcon,
@@ -31,14 +31,13 @@ import {
   Columns3Icon,
   EllipsisIcon,
   FilterIcon,
-  ListFilterIcon,
-  PlusIcon,
-  StarIcon,
-  TrashIcon,
-} from "lucide-react"
-import { AnimatePresence, motion } from "framer-motion"
+  ListFilterIcon, StarIcon,
+  TrashIcon
+} from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -49,10 +48,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
+} from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -67,26 +66,26 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -94,7 +93,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
+import { NewProjectDialog } from "../new-project";
 
 type Project = {
   id: string
@@ -300,7 +300,6 @@ export default function ProjectsSection() {
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = useState({})
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 5,
@@ -684,14 +683,7 @@ export default function ProjectsSection() {
             </AlertDialog>
           )}
           {/* Botão de adicionar projeto */}
-          <Button className="ml-auto bg-neutral-900 border-neutral-800 text-neutral-100 hover:bg-neutral-800 hover:text-neutral-50" variant="outline">
-            <PlusIcon
-              className="-ms-1 opacity-60"
-              size={16}
-              aria-hidden="true"
-            />
-            Adicionar projeto
-          </Button>
+       <NewProjectDialog/>
         </div>
       </div>
 
@@ -712,7 +704,7 @@ export default function ProjectsSection() {
                         <div
                           className={cn(
                             header.column.getCanSort() &&
-                              "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
+                            "flex h-full cursor-pointer items-center justify-between gap-2 select-none"
                           )}
                           onClick={header.column.getToggleSortingHandler()}
                           onKeyDown={(e) => {
@@ -834,8 +826,8 @@ export default function ProjectsSection() {
               {Math.min(
                 Math.max(
                   table.getState().pagination.pageIndex *
-                    table.getState().pagination.pageSize +
-                    table.getState().pagination.pageSize,
+                  table.getState().pagination.pageSize +
+                  table.getState().pagination.pageSize,
                   0
                 ),
                 table.getRowCount()
@@ -913,8 +905,8 @@ export default function ProjectsSection() {
       {data.some((p) => p.isFavorite) && (
         <div className="mt-8">
           <h2 className="text-lg font-semibold text-neutral-100 mb-3">Favoritos</h2>
-          <div className="w-full overflow-x-auto">
-            <div className="flex gap-4 min-w-[900px] max-w-full pb-2 scrollbar-thin scrollbar-thumb-neutral-800 scrollbar-track-neutral-900">
+          <ScrollArea className="pb-4">
+            <div className="flex gap-4 max-w-full pb-2">
               <AnimatePresence initial={false}>
                 {data.filter((p) => p.isFavorite).map((project) => (
                   <motion.div
@@ -923,7 +915,7 @@ export default function ProjectsSection() {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.25 }}
-                    className="w-[300px] flex-shrink-0 bg-neutral-900 border border-neutral-800 rounded-lg p-4 flex flex-col gap-3 shadow-sm"
+                    className="w-[400px] flex-shrink-0 bg-neutral-900 border border-neutral-800 rounded-lg p-4 flex flex-col gap-3 shadow-sm"
                   >
                     <div className="flex items-center gap-2 mb-2">
                       <StarIcon size={18} className="text-yellow-400 fill-yellow-400" />
@@ -935,14 +927,14 @@ export default function ProjectsSection() {
                         project.status === "in-progress"
                           ? "bg-blue-500/20 text-blue-500"
                           : project.status === "planning"
-                          ? "bg-yellow-500/20 text-yellow-500"
-                          : "bg-green-500/20 text-green-500"
+                            ? "bg-yellow-500/20 text-yellow-500"
+                            : "bg-green-500/20 text-green-500"
                       }>
                         {project.status === "in-progress"
                           ? "Em Progresso"
                           : project.status === "planning"
-                          ? "Planejamento"
-                          : "Concluído"}
+                            ? "Planejamento"
+                            : "Concluído"}
                       </Badge>
                       <span className="text-xs text-neutral-400">{project.progress}%</span>
                     </div>
@@ -967,7 +959,8 @@ export default function ProjectsSection() {
                 ))}
               </AnimatePresence>
             </div>
-          </div>
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         </div>
       )}
     </div>
@@ -1027,7 +1020,7 @@ function RowActions({ row }: { row: Row<Project> }) {
             <DropdownMenuItem className="text-neutral-100 focus:bg-neutral-800 focus:text-neutral-50">Adicionar aos favoritos</DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator className="bg-neutral-800" />
-          <DropdownMenuItem 
+          <DropdownMenuItem
             className="text-red-500 focus:text-red-500 focus:bg-neutral-800"
             onClick={() => setShowDeleteDialog(true)}
           >
@@ -1057,11 +1050,11 @@ function RowActions({ row }: { row: Row<Project> }) {
           </div>
           <AlertDialogFooter>
             <AlertDialogCancel className="bg-neutral-800 text-neutral-100 hover:bg-neutral-700">Cancelar</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={() => {
                 // Implementar lógica de exclusão aqui
                 setShowDeleteDialog(false)
-              }} 
+              }}
               className="bg-red-600 text-white hover:bg-red-700"
             >
               Excluir

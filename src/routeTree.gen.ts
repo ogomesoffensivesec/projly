@@ -19,7 +19,7 @@ import { Route as ProjectsSlugRouteImport } from './routes/projects/$slug'
 import { Route as ProjectsIdRouteImport } from './routes/projects/$id'
 import { Route as DashboardManagerRouteImport } from './routes/dashboard/manager'
 import { Route as DashboardDevRouteImport } from './routes/dashboard/dev'
-import { Route as AuthRegisterRouteImport } from './routes/auth/register'
+import { Route as AuthRequestAccessRouteImport } from './routes/auth/request-access'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthForgotPasswordRouteImport } from './routes/auth/forgot-password'
 import { Route as ProjectsIdTasksRouteImport } from './routes/projects/$id/tasks'
@@ -76,9 +76,9 @@ const DashboardDevRoute = DashboardDevRouteImport.update({
   path: '/dashboard/dev',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthRegisterRoute = AuthRegisterRouteImport.update({
-  id: '/auth/register',
-  path: '/auth/register',
+const AuthRequestAccessRoute = AuthRequestAccessRouteImport.update({
+  id: '/auth/request-access',
+  path: '/auth/request-access',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
@@ -114,7 +114,7 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
-  '/auth/register': typeof AuthRegisterRoute
+  '/auth/request-access': typeof AuthRequestAccessRoute
   '/dashboard/dev': typeof DashboardDevRoute
   '/dashboard/manager': typeof DashboardManagerRoute
   '/projects/$id': typeof ProjectsIdRouteWithChildren
@@ -132,7 +132,7 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
-  '/auth/register': typeof AuthRegisterRoute
+  '/auth/request-access': typeof AuthRequestAccessRoute
   '/dashboard/dev': typeof DashboardDevRoute
   '/dashboard/manager': typeof DashboardManagerRoute
   '/projects/$id': typeof ProjectsIdRouteWithChildren
@@ -151,7 +151,7 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/auth/forgot-password': typeof AuthForgotPasswordRoute
   '/auth/login': typeof AuthLoginRoute
-  '/auth/register': typeof AuthRegisterRoute
+  '/auth/request-access': typeof AuthRequestAccessRoute
   '/dashboard/dev': typeof DashboardDevRoute
   '/dashboard/manager': typeof DashboardManagerRoute
   '/projects/$id': typeof ProjectsIdRouteWithChildren
@@ -171,7 +171,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/auth/forgot-password'
     | '/auth/login'
-    | '/auth/register'
+    | '/auth/request-access'
     | '/dashboard/dev'
     | '/dashboard/manager'
     | '/projects/$id'
@@ -189,7 +189,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/auth/forgot-password'
     | '/auth/login'
-    | '/auth/register'
+    | '/auth/request-access'
     | '/dashboard/dev'
     | '/dashboard/manager'
     | '/projects/$id'
@@ -207,7 +207,7 @@ export interface FileRouteTypes {
     | '/terms'
     | '/auth/forgot-password'
     | '/auth/login'
-    | '/auth/register'
+    | '/auth/request-access'
     | '/dashboard/dev'
     | '/dashboard/manager'
     | '/projects/$id'
@@ -226,7 +226,7 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
   AuthLoginRoute: typeof AuthLoginRoute
-  AuthRegisterRoute: typeof AuthRegisterRoute
+  AuthRequestAccessRoute: typeof AuthRequestAccessRoute
   DashboardDevRoute: typeof DashboardDevRoute
   DashboardManagerRoute: typeof DashboardManagerRoute
   ProjectsIdRoute: typeof ProjectsIdRouteWithChildren
@@ -307,11 +307,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardDevRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/register': {
-      id: '/auth/register'
-      path: '/auth/register'
-      fullPath: '/auth/register'
-      preLoaderRoute: typeof AuthRegisterRouteImport
+    '/auth/request-access': {
+      id: '/auth/request-access'
+      path: '/auth/request-access'
+      fullPath: '/auth/request-access'
+      preLoaderRoute: typeof AuthRequestAccessRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/login': {
@@ -375,7 +375,7 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   AuthForgotPasswordRoute: AuthForgotPasswordRoute,
   AuthLoginRoute: AuthLoginRoute,
-  AuthRegisterRoute: AuthRegisterRoute,
+  AuthRequestAccessRoute: AuthRequestAccessRoute,
   DashboardDevRoute: DashboardDevRoute,
   DashboardManagerRoute: DashboardManagerRoute,
   ProjectsIdRoute: ProjectsIdRouteWithChildren,
